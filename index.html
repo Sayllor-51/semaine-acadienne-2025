@@ -8,7 +8,6 @@
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap');
@@ -27,16 +26,15 @@
 
     .card {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
       border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      padding: 1.5rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      transition: all 0.4s ease;
+      padding: 2rem;
     }
 
     .card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     }
 
     .meal-preparer {
@@ -46,32 +44,32 @@
 
     .weather-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(59, 130, 246, 0.1)"/></svg>'), linear-gradient(to bottom, #eff6ff, #e0f2fe);
-      border: 1px solid rgba(59, 130, 246, 0.3);
+      border: 2px solid #1e3a8a;
     }
 
     .tides-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(45, 212, 191, 0.1)"/></svg>'), linear-gradient(to bottom, #e6fafa, #d1f5f5);
-      border: 1px solid rgba(45, 212, 191, 0.3);
+      border: 2px solid #2dd4bf;
     }
 
     .groups-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(185, 28, 28, 0.1)"/></svg>'), linear-gradient(to bottom, #fef2f2, #fee2e2);
-      border: 1px solid rgba(185, 28, 28, 0.3);
+      border: 2px solid #b91c1c;
     }
 
     .program-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(217, 119, 6, 0.1)"/></svg>'), linear-gradient(to bottom, #fefce8, #fef9c3);
-      border: 1px solid rgba(217, 119, 6, 0.3);
+      border: 2px solid #d97706;
     }
 
     .funfact-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(31, 41, 55, 0.1)"/></svg>'), linear-gradient(to bottom, #f3f4f6, #e5e7eb);
-      border: 1px solid rgba(31, 41, 55, 0.3);
+      border: 2px solid #1e293b;
     }
 
     .challenge-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(59, 130, 246, 0.1)"/></svg>'), linear-gradient(to bottom, #eff6ff, #e0f2fe);
-      border: 1px solid rgba(59, 130, 246, 0.3);
+      border: 2px solid #1e3a8a;
     }
 
     .navbar {
@@ -158,6 +156,7 @@
     .dark .card {
       background: #2d3748;
       border-color: #4b5563;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     }
 
     .dark .navbar {
@@ -174,32 +173,32 @@
 
     .dark .weather-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(59, 130, 246, 0.2)"/></svg>'), linear-gradient(to bottom, #2d3748, #1e3a8a);
-      border-color: rgba(59, 130, 246, 0.4);
+      border-color: #1e3a8a;
     }
 
     .dark .tides-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(45, 212, 191, 0.2)"/></svg>'), linear-gradient(to bottom, #2d3748, #1e3a8a);
-      border-color: rgba(45, 212, 191, 0.4);
+      border-color: #2dd4bf;
     }
 
     .dark .groups-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(185, 28, 28, 0.2)"/></svg>'), linear-gradient(to bottom, #2d3748, #1e3a8a);
-      border-color: rgba(185, 28, 28, 0.4);
+      border-color: #b91c1c;
     }
 
     .dark .program-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(217, 119, 6, 0.2)"/></svg>'), linear-gradient(to bottom, #2d3748, #1e3a8a);
-      border-color: rgba(217, 119, 6, 0.4);
+      border-color: #d97706;
     }
 
     .dark .funfact-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(31, 41, 55, 0.2)"/></svg>'), linear-gradient(to bottom, #2d3748, #1e3a8a);
-      border-color: rgba(31, 41, 55, 0.4);
+      border-color: #1e293b;
     }
 
     .dark .challenge-card {
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(59, 130, 246, 0.2)"/></svg>'), linear-gradient(to bottom, #2d3748, #1e3a8a);
-      border-color: rgba(59, 130, 246, 0.4);
+      border-color: #1e3a8a;
     }
 
     footer {
@@ -219,7 +218,6 @@
   </button>
   <script type="text/babel">
     const { useState, useEffect } = React;
-    const { jsPDF } = window.jspdf;
 
     const data = [
       {
@@ -403,78 +401,92 @@
       }
     ];
 
-const timeline = [
-  {
-    year: "1604",
-    title: "Fondation de l’Acadie",
-    description: "Pierre du Gua, sieur de Monts, et Samuel de Champlain établissent une colonie à l’Île Sainte-Croix, puis à Port-Royal (1605), marquant le début de l’Acadie. Les colons français, principalement du Poitou et de Normandie, s’allient aux Mi’kmaq, posant les bases d’une culture unique mêlant traditions européennes et autochtones."
-  },
-  {
-    year: "1713",
-    title: "Traité d’Utrecht",
-    description: "La Nouvelle-Écosse continentale passe sous contrôle britannique, tandis que l’Île Royale (Cap-Breton) et l’Île Saint-Jean (Île-du-Prince-Édouard) restent françaises. Les Acadiens, surnommés les « Français neutres », tentent de rester neutres, créant des tensions avec les autorités coloniales."
-  },
-  {
-    year: "1755-1763",
-    title: "Grand Dérangement",
-    description: "Les Britanniques déportent environ 11 500 Acadiens vers les colonies américaines, la France et l’Angleterre, détruisant leurs terres. Environ un tiers périssent de maladies ou de naufrages. Certains se réfugient au Québec ou avec les Mi’kmaq, d’autres s’installent en Louisiane, devenant les « Cajuns »."
-  },
-  {
-    year: "1764",
-    title: "Retour progressif des Acadiens",
-    description: "Après le traité de Paris (1763), les Britanniques autorisent les Acadiens à revenir en petits groupes. Privés de leurs terres d’origine, ils s’installent dans des régions côtières comme Chéticamp et Clare, reconstruisant leurs communautés à partir de la pêche et de l’agriculture."
-  },
-  {
-    year: "1847",
-    title: "Publication d’Évangéline",
-    description: "Le poème de Henry Wadsworth Longfellow, inspiré du Grand Dérangement, raconte l’histoire d’une Acadienne séparée de son fiancé. Cette œuvre popularise la tragédie acadienne à l’échelle mondiale, faisant d’Évangéline un symbole de la résilience acadienne."
-  },
-  {
-    year: "1881",
-    title: "Première Convention nationale acadienne",
-    description: "À Memramcook, Nouveau-Brunswick, plus de 5 000 Acadiens se réunissent pour établir le 15 août comme Fête nationale acadienne, coïncidant avec l’Assomption de Marie, leur sainte patronne. Cet événement marque le début de la Renaissance acadienne."
-  },
-  {
-    year: "1884",
-    title: "Adoption des symboles acadiens",
-    description: "Lors de la deuxième Convention nationale à Miscouche, les Acadiens adoptent leur drapeau tricolore avec l’étoile Stella Maris, leur hymne (*Ave Maris Stella*) et leur devise (« L’Union fait la force »). Ces symboles unifient les communautés et inspirent les célébrations comme la Semaine Acadienne en Normandie."
-  },
-  {
-    year: "1944",
-    title: "Soldats acadiens au Débarquement",
-    description: "Le 6 juin 1944, des soldats acadiens, portant des noms comme Chiasson, Comeau ou LeBlanc, participent au Débarquement sur Juno Beach en Normandie au sein des forces canadiennes. Leur sacrifice pour libérer la France forge un lien historique entre l’Acadie et la Côte de Nacre, célébré aujourd’hui par la Semaine Acadienne."
-  },
-  {
-    year: "1955",
-    title: "Bicentenaire du Grand Dérangement",
-    description: "Pour commémorer les 200 ans de la déportation, les Acadiens relancent le Tintamarre, une parade bruyante avec casseroles et klaxons, symbolisant la douleur de l’exil et la joie de la survivance. Cette tradition est aujourd’hui un moment fort de la Semaine Acadienne en Normandie."
-  },
-  {
-    year: "1994",
-    title: "Premier Congrès mondial acadien",
-    description: "Organisé au Nouveau-Brunswick, cet événement réunit les Acadiens du monde entier pour célébrer leur culture via festivals et réunions familiales. Il renforce les liens entre les communautés, y compris avec la Normandie, où la Semaine Acadienne promeut cette culture vibrante."
-  },
-  {
-    year: "2003",
-    title: "Proclamation royale",
-    description: "La reine Elizabeth II reconnaît officiellement les torts causés par la déportation des Acadiens. Le 28 juillet est désigné Jour de commémoration du Grand Dérangement, honorant la résilience acadienne, un thème central de la Semaine Acadienne en Normandie."
-  },
-  {
-    year: "2004",
-    title: "Origines de la Semaine Acadienne",
-    description: "À l’occasion du 60e anniversaire du Débarquement, l’idée de la Semaine Acadienne émerge pour honorer les soldats acadiens ayant combattu en Normandie et promouvoir la culture acadienne moderne sur la Côte de Nacre, notamment à Courseulles-sur-Mer."
-  },
-  {
-    year: "2006",
-    title: "Première Semaine Acadienne en Normandie",
-    description: "Arnaud Blin lance la Semaine Acadienne à Courseulles-sur-Mer pour commémorer les soldats acadiens du Débarquement et célébrer la culture acadienne à travers concerts, conférences et le Tintamarre. Le festival devient un rendez-vous annuel sur la Côte de Nacre."
-  },
-  {
-    year: "2025",
-    title: "20e édition de la Semaine Acadienne",
-    description: "La Semaine Acadienne célèbre sa 20e édition, marquant 80 ans depuis la fin de la Seconde Guerre mondiale. Avec plus de 200 000 participants depuis 2006, ce festival, le plus grand du genre en France, unit Acadiens et Normands à travers hommages, musiques et traditions, notamment à Courseulles-sur-Mer."
-  }
-];
+    const timeline = [
+      {
+        year: "1604",
+        title: "Fondation de l’Acadie",
+        description: "Pierre du Gua, sieur de Monts, et Samuel de Champlain établissent une colonie à l’Île Sainte-Croix, puis à Port-Royal (1605), marquant le début de l’Acadie. Les colons français, principalement du Poitou et de Normandie, s’allient aux Mi’kmaq, posant les bases d’une culture unique mêlant traditions européennes et autochtones.",
+        icon: "fa-anchor"
+      },
+      {
+        year: "1713",
+        title: "Traité d’Utrecht",
+        description: "La Nouvelle-Écosse continentale passe sous contrôle britannique, tandis que l’Île Royale (Cap-Breton) et l’Île Saint-Jean (Île-du-Prince-Édouard) restent françaises. Les Acadiens, surnommés les « Français neutres », tentent de rester neutres, créant des tensions avec les autorités coloniales.",
+        icon: "fa-scroll"
+      },
+      {
+        year: "1755-1763",
+        title: "Grand Dérangement",
+        description: "Les Britanniques déportent environ 11 500 Acadiens vers les colonies américaines, la France et l’Angleterre, détruisant leurs terres. Environ un tiers périssent de maladies ou de naufrages. Certains se réfugient au Québec ou avec les Mi’kmaq, d’autres s’installent en Louisiane, devenant les « Cajuns ».",
+        icon: "fa-ship"
+      },
+      {
+        year: "1764",
+        title: "Retour progressif des Acadiens",
+        description: "Après le traité de Paris (1763), les Britanniques autorisent les Acadiens à revenir en petits groupes. Privés de leurs terres d’origine, ils s’installent dans des régions côtières comme Chéticamp et Clare, reconstruisant leurs communautés à partir de la pêche et de l’agriculture.",
+        icon: "fa-home"
+      },
+      {
+        year: "1847",
+        title: "Publication d’Évangéline",
+        description: "Le poème de Henry Wadsworth Longfellow, inspiré du Grand Dérangement, raconte l’histoire d’une Acadienne séparée de son fiancé. Cette œuvre popularise la tragédie acadienne à l’échelle mondiale, faisant d’Évangéline un symbole de la résilience acadienne.",
+        icon: "fa-book"
+      },
+      {
+        year: "1881",
+        title: "Première Convention nationale acadienne",
+        description: "À Memramcook, Nouveau-Brunswick, plus de 5 000 Acadiens se réunissent pour établir le 15 août comme Fête nationale acadienne, coïncidant avec l’Assomption de Marie, leur sainte patronne. Cet événement marque le début de la Renaissance acadienne.",
+        icon: "fa-users"
+      },
+      {
+        year: "1884",
+        title: "Adoption des symboles acadiens",
+        description: "Lors de la deuxième Convention nationale à Miscouche, les Acadiens adoptent leur drapeau tricolore avec l’étoile Stella Maris, leur hymne (*Ave Maris Stella*) et leur devise (« L’Union fait la force »). Ces symboles unifient les communautés et inspirent les célébrations comme la Semaine Acadienne en Normandie.",
+        icon: "fa-flag"
+      },
+      {
+        year: "1944",
+        title: "Soldats acadiens au Débarquement",
+        description: "Le 6 juin 1944, des soldats acadiens, portant des noms comme Chiasson, Comeau ou LeBlanc, participent au Débarquement sur Juno Beach en Normandie au sein des forces canadiennes. Leur sacrifice pour libérer la France forge un lien historique entre l’Acadie et la Côte de Nacre, célébré aujourd’hui par la Semaine Acadienne.",
+        icon: "fa-user-shield"
+      },
+      {
+        year: "1955",
+        title: "Bicentenaire du Grand Dérangement",
+        description: "Pour commémorer les 200 ans de la déportation, les Acadiens relancent le Tintamarre, une parade bruyante avec casseroles et klaxons, symbolisant la douleur de l’exil et la joie de la survivance. Cette tradition est aujourd’hui un moment fort de la Semaine Acadienne en Normandie.",
+        icon: "fa-drum"
+      },
+      {
+        year: "1994",
+        title: "Premier Congrès mondial acadien",
+        description: "Organisé au Nouveau-Brunswick, cet événement réunit les Acadiens du monde entier pour célébrer leur culture via festivals et réunions familiales. Il renforce les liens entre les communautés, y compris avec la Normandie, où la Semaine Acadienne promeut cette culture vibrante.",
+        icon: "fa-globe"
+      },
+      {
+        year: "2003",
+        title: "Proclamation royale",
+        description: "La reine Elizabeth II reconnaît officiellement les torts causés par la déportation des Acadiens. Le 28 juillet est désigné Jour de commémoration du Grand Dérangement, honorant la résilience acadienne, un thème central de la Semaine Acadienne en Normandie.",
+        icon: "fa-crown"
+      },
+      {
+        year: "2004",
+        title: "Origines de la Semaine Acadienne",
+        description: "À l’occasion du 60e anniversaire du Débarquement, l’idée de la Semaine Acadienne émerge pour honorer les soldats acadiens ayant combattu en Normandie et promouvoir la culture acadienne moderne sur la Côte de Nacre, notamment à Courseulles-sur-Mer.",
+        icon: "fa-lightbulb"
+      },
+      {
+        year: "2006",
+        title: "Première Semaine Acadienne en Normandie",
+        description: "Arnaud Blin lance la Semaine Acadienne à Courseulles-sur-Mer pour commémorer les soldats acadiens du Débarquement et célébrer la culture acadienne à travers concerts, conférences et le Tintamarre. Le festival devient un rendez-vous annuel sur la Côte de Nacre.",
+        icon: "fa-music"
+      },
+      {
+        year: "2025",
+        title: "20e édition de la Semaine Acadienne",
+        description: "La Semaine Acadienne célèbre sa 20e édition, marquant 80 ans depuis la fin de la Seconde Guerre mondiale. Avec plus de 200 000 participants depuis 2006, ce festival, le plus grand du genre en France, unit Acadiens et Normands à travers hommages, musiques et traditions, notamment à Courseulles-sur-Mer.",
+        icon: "fa-star"
+      }
+    ];
 
     function ErrorBoundary({ children }) {
       const [hasError, setHasError] = useState(false);
@@ -493,111 +505,6 @@ const timeline = [
       }
     }
 
-    function generatePDF() {
-      const doc = new jsPDF();
-      let yOffset = 20;
-
-      // Title
-      doc.setFontSize(20);
-      doc.setTextColor(30, 58, 138); // Navy blue (#1e3a8a)
-      doc.text("Semaine Acadienne 2025 - Programme", 20, yOffset);
-      yOffset += 15;
-
-      // Daily Program
-      data.forEach((day, index) => {
-        doc.setFontSize(16);
-        doc.setTextColor(30, 58, 138);
-        doc.text(day.date, 20, yOffset);
-        yOffset += 10;
-
-        doc.setFontSize(12);
-        doc.setTextColor(0, 0, 0);
-
-        // Weather
-        doc.text("Météo", 20, yOffset);
-        yOffset += 7;
-        doc.text(`Matin : ${day.weather.morning}`, 25, yOffset);
-        yOffset += 7;
-        doc.text(`Après-midi : ${day.weather.afternoon}`, 25, yOffset);
-        yOffset += 7;
-        doc.text(`Commentaire : ${day.weather.comment}`, 25, yOffset);
-        yOffset += 7;
-        doc.text(`Conseil : ${day.weather.tip}`, 25, yOffset);
-        yOffset += 10;
-
-        // Tides
-        doc.text("Marées", 20, yOffset);
-        yOffset += 7;
-        doc.text(`Marée haute : ${day.tides.high}`, 25, yOffset);
-        yOffset += 7;
-        doc.text(`Marée basse : ${day.tides.low}`, 25, yOffset);
-        yOffset += 10;
-
-        // Meal Groups
-        doc.text("Groupes de repas", 20, yOffset);
-        yOffset += 7;
-        day.groups.forEach((group, i) => {
-          // Strip HTML tags for PDF
-          const cleanGroup = group.replace(/<[^>]+>/g, '');
-          doc.text(`Groupe ${i + 1} : ${cleanGroup}`, 25, yOffset);
-          yOffset += 7;
-        });
-        yOffset += 10;
-
-        // Program
-        doc.text("Programme", 20, yOffset);
-        yOffset += 7;
-        day.program.forEach((event) => {
-          doc.text(`- ${event}`, 25, yOffset);
-          yOffset += 7;
-        });
-        yOffset += 10;
-
-        // Fun Fact
-        doc.text("Fun fact acadien", 20, yOffset);
-        yOffset += 7;
-        doc.text(day.funFact, 25, yOffset, { maxWidth: 160 });
-        yOffset += doc.getTextDimensions(day.funFact, { maxWidth: 160 }).h + 5;
-
-        // Family Challenge
-        doc.text("Défi familial", 20, yOffset);
-        yOffset += 7;
-        doc.text(day.challenge, 25, yOffset, { maxWidth: 160 });
-        yOffset += doc.getTextDimensions(day.challenge, { maxWidth: 160 }).h + 10;
-
-        // Add page if content exceeds page height
-        if (yOffset > 250 && index < data.length - 1) {
-          doc.addPage();
-          yOffset = 20;
-        }
-      });
-
-      // Timeline
-      doc.addPage();
-      yOffset = 20;
-      doc.setFontSize(16);
-      doc.setTextColor(30, 58, 138);
-      doc.text("Frise chronologique acadienne", 20, yOffset);
-      yOffset += 10;
-
-      doc.setFontSize(12);
-      doc.setTextColor(0, 0, 0);
-      timeline.forEach((event) => {
-        doc.text(`${event.year} : ${event.title}`, 20, yOffset);
-        yOffset += 7;
-        doc.text(event.description, 25, yOffset, { maxWidth: 160 });
-        yOffset += doc.getTextDimensions(event.description, { maxWidth: 160 }).h + 10;
-
-        if (yOffset > 250) {
-          doc.addPage();
-          yOffset = 20;
-        }
-      });
-
-      // Save the PDF
-      doc.save("Semaine_Acadienne_2025_Programme.pdf");
-    }
-
     function NavBar() {
       const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -608,7 +515,7 @@ const timeline = [
 
       return (
         <nav className="navbar fixed top-0 left-0 w-full text-white z-20">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <div className="flex items-center">
               <svg className="w-8 h-8 mr-3 text-yellow-300" viewBox="0 0 100 100" fill="currentColor">
                 <rect x="10" y="10" width="80" height="80" fill="#0055A4"/>
@@ -640,7 +547,7 @@ const timeline = [
             </button>
           </div>
           {isMenuOpen && (
-            <div className="md:hidden bg-blue-700 px-6 py-4 flex flex-col gap-2 animate-slide-in">
+            <div className="md:hidden bg-blue-700 px-4 sm:px-6 py-4 flex flex-col gap-2 animate-slide-in">
               {data.map((day, index) => (
                 <button
                   key={index}
@@ -686,14 +593,14 @@ const timeline = [
       return (
         <div id={`day-${index}`} className="card rounded-2xl mb-10 p-6 fade-in">
           <button
-            className="w-full text-left text-3xl font-bold text-blue-900 flex justify-between items-center hover:text-blue-700 transition-colors duration-300 dark:text-white dark:hover:text-blue-300"
+            className="w-full text-left text-4xl font-bold text-blue-900 flex justify-between items-center hover:text-blue-700 transition-colors duration-300 dark:text-white dark:hover:text-blue-300"
             onClick={() => setIsOpen(!isOpen)}
           >
             <span>{day.date}</span>
             <i className={`fas fa-chevron-down w-7 h-7 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}></i>
           </button>
           {isOpen && (
-            <div className="mt-8 space-y-6 animate-slide-in">
+            <div className="mt-8 grid gap-8 animate-slide-in">
               <div className="weather-card card">
                 <h3 className="text-xl font-semibold text-blue-900 flex items-center dark:text-white">
                   <i className="fas fa-cloud-sun w-6 h-6 mr-3 text-blue-600 dark:text-blue-300"></i> Météo
@@ -714,7 +621,7 @@ const timeline = [
                 <h3 className="text-xl font-semibold text-blue-900 flex items-center dark:text-white">
                   <i className="fas fa-utensils w-6 h-6 mr-3 text-blue-600 dark:text-blue-300"></i> Groupes de repas
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                   {day.groups.map((group, i) => (
                     <p key={i} className="text-gray-700 bg-white p-3 rounded-lg shadow-sm dark:text-gray-300 dark:bg-gray-700" dangerouslySetInnerHTML={{ __html: group }}></p>
                   ))}
@@ -755,10 +662,12 @@ const timeline = [
             <h3 className="text-xl font-bold text-red-600 dark:text-red-400">{event.year}</h3>
           </div>
           <div className="w-2/3 md:w-3/4 pl-8 relative">
-            <div className="absolute left-0 top-0 w-6 h-6 bg-yellow-400 rounded-full -ml-3 mt-1 transition-transform duration-300 hover:scale-125"></div>
-            <div className="absolute left-0 top-8 bottom-0 w-1 bg-blue-600 -ml-0.5 dark:bg-blue-400"></div>
+            <div className="absolute left-0 top-0 w-8 h-8 bg-yellow-400 rounded-full -ml-4 mt-1 transition-transform duration-300 hover:scale-125 flex items-center justify-center">
+              <i className={`fas ${event.icon} text-blue-900 text-sm dark:text-white`}></i>
+            </div>
+            <div className="absolute left-0 top-10 bottom-0 w-1 bg-blue-600 -ml-0.5 dark:bg-blue-400"></div>
             <h4 className="text-lg font-semibold text-blue-900 dark:text-white">{event.title}</h4>
-            <p className="text-gray-700 dark:text-gray-300">{event.description}</p>
+            <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base">{event.description}</p>
           </div>
         </div>
       );
@@ -791,7 +700,7 @@ const timeline = [
       return (
         <ErrorBoundary>
           <div className="min-h-screen">
-            <div className="hero-section text-white py-32 px-6 text-center relative fade-in">
+            <div className="hero-section text-white py-32 px-4 sm:px-6 text-center relative fade-in">
               <div className="max-w-7xl mx-auto relative z-10">
                 <svg className="w-16 h-16 mx-auto mb-4 text-yellow-300 opacity-80" viewBox="0 0 100 100" fill="currentColor">
                   <rect x="10" y="10" width="80" height="80" fill="#0055A4"/>
@@ -820,18 +729,11 @@ const timeline = [
                   >
                     {isDarkMode ? 'Mode clair' : 'Mode sombre'}
                   </button>
-                  <button
-                    onClick={generatePDF}
-                    className="px-8 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-500 transition-colors duration-300 shadow-md"
-                    aria-label="Télécharger le programme en PDF"
-                  >
-                    Télécharger le programme
-                  </button>
                 </div>
               </div>
             </div>
             <NavBar />
-            <div className="max-w-7xl mx-auto px-6 pt-24 pb-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-12">
               <h2 className="text-4xl font-bold text-blue-900 mb-10 dark:text-white">Programme quotidien</h2>
               {data.map((day, index) => (
                 <DayCard key={index} day={day} index={index} />
