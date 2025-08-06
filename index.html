@@ -10,13 +10,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Open+Sans:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap');
 
     body {
       font-family: 'Open Sans', sans-serif;
       background: #f8fafc;
       color: #1e293b;
-      line-height: 1.6;
+      line-height: 1.7;
       letter-spacing: 0.02em;
     }
 
@@ -27,14 +27,15 @@
     .card {
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 1.5rem;
     }
 
     .card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
 
     .meal-preparer {
@@ -42,12 +43,25 @@
       color: #2dd4bf;
     }
 
+    .meal-group-section {
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(45, 212, 191, 0.1)"/></svg>'), linear-gradient(to bottom, #f0f7ff, #e6f0ff);
+      background-size: cover, auto;
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid rgba(45, 212, 191, 0.3);
+    }
+
     .navbar {
       background: linear-gradient(to right, #1e3a8a, #3b82f6);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .hero-section {
-      background: linear-gradient(135deg, #1e3a8a 0%, #b91c1c 50%, #d97706 100%);
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+      background-color: rgba(0, 0, 0, 0.4);
       position: relative;
       overflow: hidden;
     }
@@ -59,7 +73,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(255,255,255,0.3)"/></svg>');
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(255,255,255,0.2)"/></svg>');
       animation: wave 12s linear infinite;
       z-index: 1;
     }
@@ -135,8 +149,9 @@
       color: #d1d5db;
     }
 
-    .dark .bg-gray-50 {
-      background: #4b5563;
+    .dark .meal-group-section {
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" fill="rgba(45, 212, 191, 0.2)"/></svg>'), linear-gradient(to bottom, #2d3748, #1e293b);
+      border-color: rgba(45, 212, 191, 0.4);
     }
 
     footer {
@@ -145,6 +160,7 @@
       text-align: center;
       padding: 2rem;
       margin-top: 2rem;
+      border-top: 2px solid #d97706;
     }
   </style>
 </head>
@@ -417,27 +433,30 @@
       };
 
       return (
-        <nav className="navbar fixed top-0 left-0 w-full text-white shadow-lg z-20">
+        <nav className="navbar fixed top-0 left-0 w-full text-white z-20">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <div className="flex items-center">
-              <svg className="w-8 h-8 mr-3 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12zm-1-6h2v4H9v-4zm0-2h2v2H9V8z"/>
+              <svg className="w-8 h-8 mr-3 text-yellow-300" viewBox="0 0 100 100" fill="currentColor">
+                <rect x="10" y="10" width="80" height="80" fill="#0055A4"/>
+                <rect x="10" y="10" width="80" height="53.33" fill="#FFFFFF"/>
+                <rect x="10" y="10" width="80" height="26.67" fill="#EF4135"/>
+                <path d="M45 15L50 5L55 15H45Z" fill="#FFC107"/>
               </svg>
               <span className="text-2xl font-bold">Semaine Acadienne 2025</span>
             </div>
-            <div className="hidden md:flex gap-3">
+            <div className="hidden md:flex gap-4">
               {data.map((day, index) => (
                 <button
                   key={index}
                   onClick={() => scrollToSection(`day-${index}`)}
-                  className="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-sm font-semibold transition-colors duration-200"
+                  className="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-sm font-semibold transition-colors duration-300"
                 >
                   {day.date.split(' ')[0]}
                 </button>
               ))}
               <button
                 onClick={() => scrollToSection('timeline')}
-                className="px-4 py-2 rounded-full bg-red-600 hover:bg-red-500 text-sm font-semibold transition-colors duration-200"
+                className="px-4 py-2 rounded-full bg-red-600 hover:bg-red-500 text-sm font-semibold transition-colors duration-300"
               >
                 Frise
               </button>
@@ -452,14 +471,14 @@
                 <button
                   key={index}
                   onClick={() => scrollToSection(`day-${index}`)}
-                  className="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-sm font-semibold transition-colors duration-200 text-left"
+                  className="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-sm font-semibold transition-colors duration-300 text-left"
                 >
                   {day.date.split(' ')[0]}
                 </button>
               ))}
               <button
                 onClick={() => scrollToSection('timeline')}
-                className="px-4 py-2 rounded-full bg-red-600 hover:bg-red-500 text-sm font-semibold transition-colors duration-200 text-left"
+                className="px-4 py-2 rounded-full bg-red-600 hover:bg-red-500 text-sm font-semibold transition-colors duration-300 text-left"
               >
                 Frise
               </button>
@@ -479,7 +498,7 @@
 
       if (isLoading) {
         return (
-          <div className="card rounded-2xl mb-8 p-6 fade-in">
+          <div className="card rounded-2xl mb-10 p-6 fade-in">
             <div className="h-8 bg-gray-200 skeleton rounded mb-4"></div>
             <div className="space-y-4">
               <div className="h-6 bg-gray-200 skeleton rounded w-1/2"></div>
@@ -491,16 +510,16 @@
       }
 
       return (
-        <div id={`day-${index}`} className="card rounded-2xl mb-8 p-6 fade-in">
+        <div id={`day-${index}`} className="card rounded-2xl mb-10 p-6 fade-in">
           <button
-            className="w-full text-left text-2xl font-bold text-blue-900 flex justify-between items-center hover:text-blue-700 transition-colors duration-200 dark:text-white dark:hover:text-blue-300"
+            className="w-full text-left text-3xl font-bold text-blue-900 flex justify-between items-center hover:text-blue-700 transition-colors duration-300 dark:text-white dark:hover:text-blue-300"
             onClick={() => setIsOpen(!isOpen)}
           >
             <span>{day.date}</span>
             <i className={`fas fa-chevron-down w-7 h-7 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}></i>
           </button>
           {isOpen && (
-            <div className="mt-6 space-y-6 animate-slide-in">
+            <div className="mt-8 space-y-8 animate-slide-in">
               <div>
                 <h3 className="text-xl font-semibold text-blue-900 flex items-center dark:text-white">
                   <i className="fas fa-cloud-sun w-6 h-6 mr-3 text-blue-600 dark:text-blue-300"></i> Météo
@@ -517,13 +536,13 @@
                 <p className="text-gray-700 dark:text-gray-300"><strong>Marée haute :</strong> {day.tides.high}</p>
                 <p className="text-gray-700 dark:text-gray-300"><strong>Marée basse :</strong> {day.tides.low}</p>
               </div>
-              <div>
+              <div className="meal-group-section">
                 <h3 className="text-xl font-semibold text-blue-900 flex items-center dark:text-white">
                   <i className="fas fa-utensils w-6 h-6 mr-3 text-blue-600 dark:text-blue-300"></i> Groupes de repas
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                   {day.groups.map((group, i) => (
-                    <p key={i} className="text-gray-700 bg-gray-50 p-3 rounded-lg shadow-sm dark:text-gray-300 dark:bg-gray-700" dangerouslySetInnerHTML={{ __html: group }}></p>
+                    <p key={i} className="text-gray-700 bg-white p-3 rounded-lg shadow-sm dark:text-gray-300 dark:bg-gray-700" dangerouslySetInnerHTML={{ __html: group }}></p>
                   ))}
                 </div>
               </div>
@@ -557,13 +576,13 @@
 
     function TimelineCard({ event, index }) {
       return (
-        <div className="flex mb-10 relative slide-in">
+        <div className="flex mb-12 relative slide-in">
           <div className="w-1/3 md:w-1/4 text-right pr-6">
             <h3 className="text-xl font-bold text-red-600 dark:text-red-400">{event.year}</h3>
           </div>
           <div className="w-2/3 md:w-3/4 pl-8 relative">
-            <div className="absolute left-0 top-0 w-5 h-5 bg-yellow-400 rounded-full -ml-2.5 mt-1.5 transition-transform duration-200 hover:scale-125"></div>
-            <div className="absolute left-0 top-6 bottom-0 w-1 bg-blue-600 -ml-0.5 dark:bg-blue-400"></div>
+            <div className="absolute left-0 top-0 w-6 h-6 bg-yellow-400 rounded-full -ml-3 mt-1 transition-transform duration-300 hover:scale-125"></div>
+            <div className="absolute left-0 top-8 bottom-0 w-1 bg-blue-600 -ml-0.5 dark:bg-blue-400"></div>
             <h4 className="text-lg font-semibold text-blue-900 dark:text-white">{event.title}</h4>
             <p className="text-gray-700 dark:text-gray-300">{event.description}</p>
           </div>
@@ -598,36 +617,36 @@
       return (
         <ErrorBoundary>
           <div className="min-h-screen">
-            <div className="hero-section text-white py-28 px-6 text-center relative fade-in">
-              <div className="max-w-7xl mx-auto">
-                <svg className="w-16 h-16 mx-auto mb-4 text-yellow-300" viewBox="0 0 100 100" fill="currentColor">
+            <div className="hero-section text-white py-32 px-6 text-center relative fade-in">
+              <div className="max-w-7xl mx-auto relative z-10">
+                <svg className="w-16 h-16 mx-auto mb-4 text-yellow-300 opacity-80" viewBox="0 0 100 100" fill="currentColor">
                   <rect x="10" y="10" width="80" height="80" fill="#0055A4"/>
                   <rect x="10" y="10" width="80" height="53.33" fill="#FFFFFF"/>
                   <rect x="10" y="10" width="80" height="26.67" fill="#EF4135"/>
                   <path d="M45 15L50 5L55 15H45Z" fill="#FFC107"/>
                 </svg>
-                <h1 className="text-4xl md:text-5xl font-bold flex items-center justify-center">
+                <h1 className="text-5xl md:text-6xl font-bold flex items-center justify-center">
                   Semaine Acadienne 2025
                 </h1>
-                <p className="text-lg md:text-xl mt-3 max-w-2xl mx-auto">
+                <p className="text-xl md:text-2xl mt-4 max-w-3xl mx-auto">
                   Programme, repas, marées, fun facts et histoire acadienne à Courseulles-sur-Mer !
                 </p>
-                <div className="flex justify-center gap-4 mt-6">
+                <div className="flex justify-center gap-6 mt-8">
                   <button
                     onClick={toggleAll}
-                    className="px-6 py-3 bg-yellow-400 text-blue-900 rounded-full font-semibold hover:bg-yellow-300 transition-colors duration-200"
+                    className="px-8 py-3 bg-yellow-400 text-blue-900 rounded-full font-semibold hover:bg-yellow-300 transition-colors duration-300 shadow-md"
                   >
                     {allOpen ? 'Tout réduire' : 'Tout déplier'}
                   </button>
                   <button
                     onClick={() => setIsDarkMode(!isDarkMode)}
-                    className="px-6 py-3 bg-gray-600 text-white rounded-full font-semibold hover:bg-gray-500 transition-colors duration-200"
+                    className="px-8 py-3 bg-gray-600 text-white rounded-full font-semibold hover:bg-gray-500 transition-colors duration-300 shadow-md"
                   >
                     {isDarkMode ? 'Mode clair' : 'Mode sombre'}
                   </button>
                   <button
                     onClick={() => alert('Fonctionnalité de téléchargement PDF à implémenter')}
-                    className="px-6 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-500 transition-colors duration-200"
+                    className="px-8 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-500 transition-colors duration-300 shadow-md"
                   >
                     Télécharger le programme
                   </button>
@@ -635,13 +654,13 @@
               </div>
             </div>
             <NavBar />
-            <div className="max-w-7xl mx-auto px-6 pt-24 pb-10">
-              <h2 className="text-3xl font-bold text-blue-900 mb-8 dark:text-white">Programme quotidien</h2>
+            <div className="max-w-7xl mx-auto px-6 pt-24 pb-12">
+              <h2 className="text-4xl font-bold text-blue-900 mb-10 dark:text-white">Programme quotidien</h2>
               {data.map((day, index) => (
                 <DayCard key={index} day={day} index={index} />
               ))}
-              <h2 id="timeline" className="text-3xl font-bold text-blue-900 mt-12 mb-8 dark:text-white">Frise chronologique acadienne</h2>
-              <div className="card rounded-2xl p-8">
+              <h2 id="timeline" className="text-4xl font-bold text-blue-900 mt-12 mb-10 dark:text-white">Frise chronologique acadienne</h2>
+              <div className="card rounded-2xl p-8 bg-gradient-to-b from-blue-50 to-white dark:from-gray-800 dark:to-gray-900">
                 {timeline.map((event, index) => (
                   <TimelineCard key={index} event={event} index={index} />
                 ))}
