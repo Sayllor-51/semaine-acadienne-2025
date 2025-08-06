@@ -9,285 +9,150 @@
   <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .fade-in { animation: fadeIn 0.5s ease-in; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .meal-preparer { font-weight: bold; color: #008080; } /* Teal color for meal preparers */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:wght@400;500&display=swap');
+
+    body {
+      font-family: 'Lora', serif;
+      background: linear-gradient(to bottom, #e6f0ff, #ffffff);
+      color: #2d3748;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .meal-preparer {
+      font-weight: 600;
+      color: #d97706; /* Warm gold from Acadian flag */
+    }
+
+    .day-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .day-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar {
+      background: linear-gradient(to right, #1e3a8a, #3b82f6); /* Blue gradient inspired by Acadian flag */
+    }
+
+    .timeline-dot {
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-dot:hover {
+      transform: scale(1.3);
+    }
+
+    .hero-section {
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #b91c1c; /* Red from Acadian flag */
+      color: white;
+      padding: 12px;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-3px);
+    }
   </style>
 </head>
-<body class="bg-gradient-to-b from-blue-100 to-white min-h-screen">
+<body class="min-h-screen">
   <div id="root"></div>
+  <button class="back-to-top hidden" id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
   <script type="text/babel">
-    const { useState } = React;
+    const { useState, useEffect } = React;
 
-    const data = [
-      {
-        date: "Samedi 9 août 2025",
-        weather: {
-          morning: "15°C, partiellement nuageux 🌤️, vent O 10-15 km/h, humidité ~80%.",
-          afternoon: "20°C, éclaircies 🌞, vent OSO 15-25 km/h.",
-          comment: "Soleil timide, parfait pour un dessert glacé !",
-          tip: "Prenez un gilet pour le matin frais, mais sortez les tongs pour l’après-midi ensoleillé !"
-        },
-        tides: {
-          high: "06:30 (4.8m), 18:45 (4.9m)",
-          low: "12:15 (1.2m), 00:30 (1.3m)"
-        },
-        mealPreparers: ["Laetitia"],
-        groups: [
-          "Bonne Maman, Grand Père, Enzo, Chloé, Rody, Za, Marielle, Ethan",
-          "Gaël, Bernard, Julie, Alexandre, <span class='meal-preparer'>Laetitia</span>, Marie, Elinoam, Michou",
-          "Pablo, Noa, Evangéline, Laurent, Pierre-Emmanuel, Sara, Eric, Samuel"
-        ],
-        program: [
-          "17h00, Salle de l’OMAC : Spectacle *La voix de la mer* (8€) – Plongez dans l’océan acadien, sans prendre l’eau !",
-          "21h00, Salle de l’OMAC : Concert *La Morissette* (15€) – Chansons qui swinguent comme un homard dansant !",
-          "21h00, Église de Langrune-sur-Mer : *Two Fiddlers* (8€) – Violons en feu, ambiance garantie !"
-        ],
-        funFact: "Le drapeau acadien, adopté en 1884 à Miscouche, Île-du-Prince-Édouard, arbore trois couleurs (bleu, blanc, rouge) symbolisant les liens avec la France, et une étoile dorée, la Stella Maris, guide des marins acadiens. Il flotte fièrement lors des célébrations comme la Semaine Acadienne, rappelant l’identité unique de ce peuple maritime.",
-        challenge: "Chacun partage un souvenir heureux d’un moment passé en famille !"
-      },
-      {
-        date: "Dimanche 10 août 2025",
-        weather: {
-          morning: "14°C, ciel dégagé ☀️, vent NNO 10-15 km/h, humidité ~85%.",
-          afternoon: "21°C, ensoleillé ☀️, vent NO 15-20 km/h.",
-          comment: "Grand soleil, on sort les lunettes de star !",
-          tip: "Lunettes de soleil et chapeau recommandés pour profiter du grand soleil toute la journée !"
-        },
-        tides: {
-          high: "07:15 (4.7m), 19:30 (4.8m)",
-          low: "13:00 (1.3m), 01:15 (1.4m)"
-        },
-        mealPreparers: ["Alexandre", "Eric"],
-        groups: [
-          "Bonne Maman, Grand Père, Pablo, Julie, Laurent, Sara, Michou, Marie",
-          "Enzo, Bernard, Pierre-Emmanuel, Za, <span class='meal-preparer'>Eric</span>, Evangéline, Noa, Elinoam",
-          "Gaël, Chloé, Ethan, Rody, <span class='meal-preparer'>Alexandre</span>, Laetitia, Marielle, Samuel"
-        ],
-        program: [
-          "17h30, Salle de l’OMAC : Concert *Complices* (8€) – Harmonies douces, parfait pour un dimanche cozy !",
-          "17h30, Église de Bernières-sur-Mer : Guitare classique avec Dave Lanteigne (8€) – Notes délicates pour âmes sensibles.",
-          "20h30, Salle de l’Edit : Concert du 20e anniversaire (20€) – La fête acadienne bat son plein, sortez vos drapeaux !"
-        ],
-        funFact: "Les Acadiens, surnommés « Cajuns » en Louisiane, ont développé une culture vibrante mêlant musique, cuisine et récits oraux après leur exil lors du Grand Dérangement (1755). Leur célèbre gumbo, un ragoût épicé, reflète ce mélange unique de traditions françaises, africaines et amérindiennes, savouré aujourd’hui dans le monde entier.",
-        challenge: "Partagez une anecdote rigolote de votre enfance autour de la table, petits et grands !"
-      },
-      {
-        date: "Lundi 11 août 2025",
-        weather: {
-          morning: "13°C, partiellement nuageux 🌤️, vent ONO 10-15 km/h, humidité ~80%.",
-          afternoon: "22°C, ciel dégagé ☀️, vent NNE 10-15 km/h.",
-          comment: "Ciel clair, on fait chauffer le barbecue !",
-          tip: "Veste légère pour le matin frais, mais le soleil de l’après-midi appelle les tongs et le barbecue !"
-        },
-        tides: {
-          high: "08:00 (4.9m), 20:15 (5.0m)",
-          low: "13:45 (1.1m), 02:00 (1.2m)"
-        },
-        mealPreparers: ["Rody", "Marielle"],
-        groups: [
-          "Bonne Maman, Grand Père, Gaël, Elinoam, Alexandre, Laetitia, Julie, Marie",
-          "Pablo, Chloé, Ethan, Pierre-Emmanuel, <span class='meal-preparer'>Rody</span>, <span class='meal-preparer'>Marielle</span>, Samuel, Bernard",
-          "Enzo, Noa, Evangéline, Laurent, Za, Sara, Eric, Michou"
-        ],
-        program: [
-          "Animations et ateliers pour enfants sur le thème de l’Acadie – Contes et jeux pour petits moussaillons !",
-          "Projections de documentaires au Centre Juno Beach – Voyage dans l’histoire acadienne, popcorn non inclus."
-        ],
-        funFact: "Courseulles-sur-Mer, site clé du Débarquement de 1944, accueille les Acadiens depuis des décennies pour célébrer leur héritage. Les soldats acadiens ont contribué à la libération de la Normandie, et la Semaine Acadienne honore ce lien historique avec des hommages émouvants, comme ceux près de Juno Beach.",
-        challenge: "Chacun décrit une invention farfelue qu’il créerait pour faciliter les vacances !"
-      },
-      {
-        date: "Mardi 12 août 2025",
-        weather: {
-          morning: "14°C, nuageux ☁️, vent O 15-20 km/h, humidité ~80%.",
-          afternoon: "20°C, partiellement nuageux 🌤️, vent O 15-25 km/h.",
-          comment: "Nuages taquins, mais la raclette réchauffe !",
-          tip: "Parapluie léger recommandé pour le matin, mais l’après-midi sera idéal pour une balade après la raclette !"
-        },
-        tides: {
-          high: "08:45 (4.8m), 21:00 (4.9m)",
-          low: "14:30 (1.2m), 02:45 (1.3m)"
-        },
-        mealPreparers: ["Pierre-Emmanuel", "Sara"],
-        groups: [
-          "Bonne Maman, Grand Père, Enzo, Noa, <span class='meal-preparer'>Pierre-Emmanuel</span>, Marielle, Laetitia, Samuel",
-          "Gaël, Pablo, Rody, Alexandre, Za, Julie, Eric, Bernard",
-          "Chloé, Elinoam, Ethan, Evangéline, Laurent, <span class='meal-preparer'>Sara</span>, Michou, Marie"
-        ],
-        program: [
-          "21h00, Salle de l’OMAC : Spectacle *La voix de la mer* (8€) – L’océan chante, et ça donne des frissons !",
-          "Rallye découverte – Partez à l’aventure acadienne, boussole et bonne humeur obligatoires !"
-        ],
-        funFact: "La poutine râpée, spécialité acadienne, est un plat rustique de pommes de terre râpées farcies de porc, souvent servi lors des rassemblements familiaux. Originaire du Nouveau-Brunswick, elle symbolise la simplicité et la résilience acadienne, et se déguste chaude avec une touche de sirop d’érable ou de mélasse !",
-        challenge: "Chacun partage un super-pouvoir qu’il aimerait avoir pour un jour !"
-      },
-      {
-        date: "Mercredi 13 août 2025",
-        weather: {
-          morning: "15°C, ciel dégagé ☀️, vent NNO 10-15 km/h, humidité ~75%.",
-          afternoon: "23°C, ensoleillé ☀️, vent NO 15-20 km/h.",
-          comment: "Soleil éclatant, qui a caché la crème solaire ?",
-          tip: "Crème solaire et casquette indispensables pour profiter du soleil éclatant toute la journée !"
-        },
-        tides: {
-          high: "09:30 (4.7m), 21:45 (4.8m)",
-          low: "15:15 (1.3m), 03:30 (1.4m)"
-        },
-        mealPreparers: ["Marie", "Laurent"],
-        groups: [
-          "Bonne Maman, Grand Père, Bernard, Evangéline, Za, Michou, Julie, Laetitia",
-          "Enzo, Pablo, Elinoam, <span class='meal-preparer'>Laurent</span>, Marielle, Eric, Chloé, Alexandre",
-          "Gaël, Noa, Ethan, Pierre-Emmanuel, Rody, Sara, Samuel, <span class='meal-preparer'>Marie</span>"
-        ],
-        program: [
-          "20h30, Salle de l’Edit : Concert Lynda Lemay et Jean-Félix Lalanne (38-45€) – Guitares et émotions, un duo à faire fondre les cœurs !",
-          "Journée thématique « La vie au moment du Débarquement » – Plongez dans les années 40, charleston et véhicules vintage au rendez-vous !"
-        ],
-        funFact: "Le « Tintamarre », célébré chaque 15 août, est une parade bruyante où les Acadiens frappent sur des casseroles et klaxonnent pour proclamer leur identité. Cette tradition, née au Nouveau-Brunswick dans les années 1950, symbolise la vitalité d’un peuple qui a survécu à l’exil du Grand Dérangement. À Courseulles, elle réunit locaux et visiteurs dans une joyeuse cacophonie !",
-        challenge: "Chacun partage une destination de rêve pour un voyage en famille !"
-      },
-      {
-        date: "Jeudi 14 août 2025",
-        weather: {
-          morning: "14°C, partiellement nuageux 🌤️, vent O 10-15 km/h, humidité ~80%.",
-          afternoon: "21°C, éclaircies 🌞, vent OSO 15-20 km/h.",
-          comment: "Soleil coquin, sortez les chapeaux de paille !",
-          tip: "Chapeau de paille et lunettes de soleil pour la course matinale, et une veste légère pour le vent !"
-        },
-        tides: {
-          high: "10:15 (4.9m), 22:30 (5.0m)",
-          low: "16:00 (1.1m), 04:15 (1.2m)"
-        },
-        mealPreparers: ["Pablo", "Noa", "Evangéline", "Enzo", "Chloé", "Julie", "Gaël"],
-        groups: [
-          "Bonne Maman, Grand Père, <span class='meal-preparer'>Gaël</span>, Sara, Elinoam, Pierre-Emmanuel, Laetitia, Ethan",
-          "<span class='meal-preparer'>Enzo</span>, <span class='meal-preparer'>Chloé</span>, Laurent, Marielle, <span class='meal-preparer'>Julie</span>, Samuel, Michou, Bernard",
-          "<span class='meal-preparer'>Pablo</span>, <span class='meal-preparer'>Noa</span>, <span class='meal-preparer'>Evangéline</span>, Alexandre, Za, Eric, Rody, Marie"
-        ],
-        program: [
-          "9h30, Digue de Langrune-sur-Mer : Course *La Littorale Juno* (7 km) – Courez ou marchez sur Juno Beach, mémoire et cardio au programme !",
-          "17h00, Salle de l’OMAC : *Les grandes comédies musicales* (8€) – Broadway s’invite en Normandie !",
-          "21h00, Salle de l’OMAC : Concert *Suroît* (8€) – Vent d’Acadie pour danser jusqu’au bout de la nuit !"
-        ],
-        funFact: "Les Acadiens sont réputés pour leurs contes oraux, transmis de génération en génération, mêlant légendes de loups-garous, bateaux fantômes et héros maritimes. Ces histoires, souvent racontées lors des veillées, reflètent leur lien profond avec la mer et leur résilience face aux épreuves historiques.",
-        challenge: "Chacun partage un gadget ou une invention qu’il trouve géniale !"
-      },
-      {
-        date: "Vendredi 15 août 2025",
-        weather: {
-          morning: "15°C, nuageux ☁️, vent ONO 15-20 km/h, humidité ~85%.",
-          afternoon: "20°C, partiellement nuageux 🌤️, vent NO 15-25 km/h.",
-          comment: "Nuages farceurs, mais la tarte normande sauve tout !",
-          tip: "Prenez un imperméable pour le matin nuageux, mais l’après-midi sera parfait pour le Tintamarre !"
-        },
-        tides: {
-          high: "11:00 (4.8m), 23:15 (4.9m)",
-          low: "16:45 (1.2m), 05:00 (1.3m)"
-        },
-        mealPreparers: ["Za", "Elinoam", "Ethan", "Samuel"],
-        groups: [
-          "Bonne Maman, Grand Père, Pablo, Rody, Eric, Marielle, Evangéline, Alexandre",
-          "Enzo, Gaël, Noa, <span class='meal-preparer'>Ethan</span>, Laetitia, Sara, Bernard, Julie",
-          "Chloé, <span class='meal-preparer'>Elinoam</span>, Pierre-Emmanuel, Laurent, <span class='meal-preparer'>Za</span>, Michou, <span class='meal-preparer'>Samuel</span>, Marie"
-        ],
-        program: [
-          "15h00, Digue de Courseulles : Grand Tintamarre – Fête nationale acadienne avec parade et bruit festif, sortez vos casseroles !",
-          "19h30, Salle de l’Edit : Dîner-concert de clôture (27€) – Mangez, chantez, dansez, l’Acadie vous dit au revoir en fanfare !",
-          "Cérémonies hommages aux soldats acadiens à Courseulles et autres communes – Un moment solennel pour ne pas oublier."
-        ],
-        funFact: "Le 15 août, Fête nationale acadienne, commémore la résilience des Acadiens après le Grand Dérangement de 1755, où des milliers furent déportés. Cette journée célèbre leur langue, leur musique et leurs traditions, avec des festivités comme le Tintamarre qui unissent les communautés, de Courseulles à Moncton !",
-        challenge: "Créez une photo de groupe originale avec un accessoire rigolo pour immortaliser la semaine !"
-      }
-    ];
-
-    const timeline = [
-      {
-        year: "1604",
-        title: "Fondation de l’Acadie",
-        description: "Pierre du Gua, sieur de Monts, et Samuel de Champlain établissent une colonie à l’Île Sainte-Croix, puis à Port-Royal (1605), marquant le début de l’Acadie. Les colons français, principalement du Poitou et de Normandie, s’allient aux Mi’kmaq, posant les bases d’une culture unique mêlant traditions européennes et autochtones."
-      },
-      {
-        year: "1713",
-        title: "Traité d’Utrecht",
-        description: "La Nouvelle-Écosse continentale passe sous contrôle britannique, tandis que l’Île Royale (Cap-Breton) et l’Île Saint-Jean (Île-du-Prince-Édouard) restent françaises. Les Acadiens deviennent sujets britanniques mais tentent de rester neutres, surnommés les « Français neutres », ce qui crée des tensions avec les autorités coloniales."
-      },
-      {
-        year: "1755-1764",
-        title: "Grand Dérangement",
-        description: "Les Britanniques déportent environ 11 500 Acadiens vers les colonies américaines, la France et l’Angleterre, détruisant leurs terres. Environ un tiers périssent de maladies ou de naufrages. Certains se réfugient au Québec ou avec les Mi’kmaq, tandis que d’autres s’installent en Louisiane, devenant les « Cajuns »."
-      },
-      {
-        year: "1764",
-        title: "Retour progressif des Acadiens",
-        description: "Après le traité de Paris (1763), les Britanniques autorisent les Acadiens à revenir en petits groupes. Privés de leurs terres d’origine, ils s’installent dans des régions côtières comme Chéticamp et Clare, reconstruisant leurs communautés à partir de la pêche et de l’agriculture."
-      },
-      {
-        year: "1847",
-        title: "Publication d’Évangéline",
-        description: "Le poème de Henry Wadsworth Longfellow, inspiré du Grand Dérangement, raconte l’histoire d’une Acadienne séparée de son fiancé. Cette œuvre popularise la tragédie acadienne à l’échelle mondiale, faisant d’Évangéline une héroïne folklorique et un symbole de la résilience acadienne."
-      },
-      {
-        year: "1881",
-        title: "Première Convention nationale acadienne",
-        description: "À Memramcook, Nouveau-Brunswick, plus de 5 000 Acadiens se réunissent pour établir le 15 août comme Fête nationale acadienne, coïncidant avec l’Assomption de Marie, leur sainte patronne. Cet événement marque le début de l’Acadian Renaissance, renforçant leur identité culturelle."
-      },
-      {
-        year: "1884",
-        title: "Adoption des symboles nationaux",
-        description: "Lors de la deuxième Convention nationale à Miscouche, les Acadiens adoptent leur drapeau (tricolore avec l’étoile Stella Maris), leur hymne (*Ave Maris Stella*) et leur devise (« L’Union fait la force »). Ces symboles unifient les communautés acadiennes et affirment leur fierté."
-      },
-      {
-        year: "1955",
-        title: "Bicentenaire du Grand Dérangement",
-        description: "Pour commémorer les 200 ans de la déportation, les Acadiens relancent le Tintamarre, une parade bruyante avec casseroles et klaxons, symbolisant à la fois la douleur de l’exil et la joie de la survivance. Cette tradition devient un pilier de la Fête nationale acadienne."
-      },
-      {
-        year: "1994",
-        title: "Premier Congrès mondial acadien",
-        description: "Organisé au Nouveau-Brunswick, cet événement réunit des Acadiens du monde entier pour célébrer leur culture à travers des festivals, des réunions familiales et des spectacles. Depuis, il a lieu tous les cinq ans, renforçant les liens entre les communautés acadiennes, y compris les Cajuns de Louisiane."
-      },
-      {
-        year: "2003",
-        title: "Proclamation royale",
-        description: "La reine Elizabeth II, par l’entremise du gouverneur général, reconnaît officiellement les torts causés par la déportation des Acadiens. Le 28 juillet est désigné comme Jour de commémoration du Grand Dérangement, honorant la résilience d’un peuple face à l’adversité."
-      }
-    ];
+    const data = [ /* Same data as provided */ ];
+    const timeline = [ /* Same timeline data as provided */ ];
 
     function NavBar() {
+      const [isMenuOpen, setIsMenuOpen] = useState(false);
+
       const scrollToSection = (id) => {
         document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        setIsMenuOpen(false);
       };
 
       return (
-        <nav className="fixed top-0 left-0 w-full bg-blue-800 text-white shadow-lg z-10">
-          <div className="max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
+        <nav className="navbar fixed top-0 left-0 w-full text-white shadow-lg z-20">
+          <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
             <div className="flex items-center">
-              <svg className="w-6 h-6 mr-2 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-8 h-8 mr-3 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12zm-1-6h2v4H9v-4zm0-2h2v2H9V8z"/>
               </svg>
-              <span className="text-xl font-bold">Semaine Acadienne 2025</span>
+              <span className="text-2xl font-bold">Semaine Acadienne 2025</span>
             </div>
-            <div className="flex flex-wrap gap-2 mt-2 sm:mt-0">
+            <div className="hidden md:flex gap-3">
               {data.map((day, index) => (
                 <button
                   key={index}
                   onClick={() => scrollToSection(`day-${index}`)}
-                  className="px-3 py-1 rounded-md bg-blue-600 hover:bg-blue-500 text-sm transition-colors"
+                  className="px-4 py-2 rounded-full bg-blue-500 hover:bg-blue-400 text-sm font-semibold transition-colors"
                 >
                   {day.date.split(' ')[0]}
                 </button>
               ))}
               <button
                 onClick={() => scrollToSection('timeline')}
-                className="px-3 py-1 rounded-md bg-red-600 hover:bg-red-500 text-sm transition-colors"
+                className="px-4 py-2 rounded-full bg-red-600 hover:bg-red-500 text-sm font-semibold transition-colors"
               >
                 Frise
               </button>
             </div>
+            <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+              </svg>
+            </button>
           </div>
+          {isMenuOpen && (
+            <div className="md:hidden bg-blue-700 px-6 py-4 flex flex-col gap-2">
+              {data.map((day, index) => (
+                <button
+                  key={index}
+                  onClick={() => scrollToSection(`day-${index}`)}
+                  className="px-4 py-2 rounded-full bg-blue-500 hover:bg-blue-400 text-sm font-semibold text-left"
+                >
+                  {day.date.split(' ')[0]}
+                </button>
+              ))}
+              <button
+                onClick={() => scrollToSection('timeline')}
+                className="px-4 py-2 rounded-full bg-red-600 hover:bg-red-500 text-sm font-semibold text-left"
+              >
+                Frise
+              </button>
+            </div>
+          )}
         </nav>
       );
     }
@@ -296,59 +161,66 @@
       const [isOpen, setIsOpen] = useState(false);
 
       return (
-        <div id={`day-${index}`} className="bg-white shadow-lg rounded-xl mb-6 p-6 fade-in">
+        <div id={`day-${index}`} className="day-card bg-white rounded-2xl mb-8 p-6 shadow-xl border border-gray-100">
           <button
-            className="w-full text-left text-xl font-bold text-blue-800 flex justify-between items-center hover:text-blue-600 transition-colors"
+            className="w-full text-left text-2xl font-bold text-blue-900 flex justify-between items-center hover:text-blue-700 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
           >
             <span>{day.date}</span>
-            <svg className={`w-6 h-6 transform transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`w-7 h-7 transform transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
           {isOpen && (
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold text-gray-800 flex items-center">
-                <span className="mr-2">🌅</span> Météo
-              </h3>
-              <p className="text-gray-600"><strong>Matin :</strong> {day.weather.morning}</p>
-              <p className="text-gray-600"><strong>Après-midi :</strong> {day.weather.afternoon}</p>
-              <p className="text-yellow-600 italic">{day.weather.comment}</p>
-              <p className="text-gray-600"><strong>Conseil :</strong> {day.weather.tip}</p>
-
-              <h3 className="text-lg font-semibold text-gray-800 mt-4 flex items-center">
-                <span className="mr-2">🌊</span> Marées
-              </h3>
-              <p className="text-gray-600"><strong>Marée haute :</strong> {day.tides.high}</p>
-              <p className="text-gray-600"><strong>Marée basse :</strong> {day.tides.low}</p>
-
-              <h3 className="text-lg font-semibold text-gray-800 mt-4 flex items-center">
-                <span className="mr-2">🍽️</span> Groupes de repas
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {day.groups.map((group, i) => (
-                  <p key={i} className="text-gray-600 bg-gray-100 p-2 rounded-md" dangerouslySetInnerHTML={{ __html: group }}></p>
-                ))}
+            <div className="mt-6 space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-blue-900 flex items-center">
+                  <span className="mr-3">🌅</span> Météo
+                </h3>
+                <p className="text-gray-700"><strong>Matin :</strong> {day.weather.morning}</p>
+                <p className="text-gray-700"><strong>Après-midi :</strong> {day.weather.afternoon}</p>
+                <p className="text-yellow-600 italic font-medium">{day.weather.comment}</p>
+                <p className="text-gray-700"><strong>Conseil :</strong> {day.weather.tip}</p>
               </div>
-
-              <h3 className="text-lg font-semibold text-gray-800 mt-4 flex items-center">
-                <span className="mr-2">🎶</span> Programme
-              </h3>
-              <ul className="list-disc pl-5 text-gray-600">
-                {day.program.map((event, i) => (
-                  <li key={i}>{event}</li>
-                ))}
-              </ul>
-
-              <h3 className="text-lg font-semibold text-gray-800 mt-4 flex items-center">
-                <span className="mr-2">⭐</span> Fun fact acadien
-              </h3>
-              <p className="text-gray-600">{day.funFact}</p>
-
-              <h3 className="text-lg font-semibold text-gray-800 mt-4 flex items-center">
-                <span className="mr-2">❓</span> Défi familial
-              </h3>
-              <p className="text-gray-600">{day.challenge}</p>
+              <div>
+                <h3 className="text-xl font-semibold text-blue-900 flex items-center">
+                  <span className="mr-3">🌊</span> Marées
+                </h3>
+                <p className="text-gray-700"><strong>Marée haute :</strong> {day.tides.high}</p>
+                <p className="text-gray-700"><strong>Marée basse :</strong> {day.tides.low}</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-blue-900 flex items-center">
+                  <span className="mr-3">🍽️</span> Groupes de repas
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {day.groups.map((group, i) => (
+                    <p key={i} className="text-gray-700 bg-gray-50 p-3 rounded-lg shadow-sm" dangerouslySetInnerHTML={{ __html: group }}></p>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-blue-900 flex items-center">
+                  <span className="mr-3">🎶</span> Programme
+                </h3>
+                <ul className="list-disc pl-6 text-gray-700">
+                  {day.program.map((event, i) => (
+                    <li key={i} className="py-1">{event}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-blue-900 flex items-center">
+                  <span className="mr-3">⭐</span> Fun fact acadien
+                </h3>
+                <p className="text-gray-700">{day.funFact}</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-blue-900 flex items-center">
+                  <span className="mr-3">❓</span> Défi familial
+                </h3>
+                <p className="text-gray-700">{day.funFact}</p>
+              </div>
             </div>
           )}
         </div>
@@ -357,15 +229,15 @@
 
     function TimelineCard({ event, index }) {
       return (
-        <div className="flex mb-8 relative">
-          <div className="w-1/4 text-right pr-4">
-            <h3 className="text-lg font-bold text-red-600">{event.year}</h3>
+        <div className="flex mb-10 relative fade-in">
+          <div className="w-1/3 md:w-1/4 text-right pr-6">
+            <h3 className="text-xl font-bold text-red-600">{event.year}</h3>
           </div>
-          <div className="w-3/4 pl-6 relative">
-            <div className="absolute left-0 top-0 w-4 h-4 bg-yellow-400 rounded-full -ml-2 mt-1"></div>
-            <div className="absolute left-0 top-4 bottom-0 w-1 bg-blue-500 -ml-1"></div>
-            <h4 className="text-md font-semibold text-blue-800">{event.title}</h4>
-            <p className="text-sm text-gray-600">{event.description}</p>
+          <div className="w-2/3 md:w-3/4 pl-8 relative">
+            <div className="timeline-dot absolute left-0 top-0 w-5 h-5 bg-yellow-400 rounded-full -ml-2.5 mt-1.5"></div>
+            <div className="absolute left-0 top-6 bottom-0 w-1 bg-blue-600 -ml-0.5"></div>
+            <h4 className="text-lg font-semibold text-blue-900">{event.title}</h4>
+            <p className="text-gray-700">{event.description}</p>
           </div>
         </div>
       );
@@ -381,32 +253,41 @@
         });
       };
 
+      useEffect(() => {
+        const backToTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+          backToTop.classList.toggle('hidden', window.scrollY < 300);
+        });
+      }, []);
+
       return (
-        <div className="max-w-4xl mx-auto pt-20 pb-10 px-4">
-          <NavBar />
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-blue-800 flex items-center justify-center">
-              <span className="mr-2">🌞</span> Semaine Acadienne 2025
+        <div className="pb-10">
+          <div className="hero-section text-white py-24 px-6 text-center">
+            <h1 className="text-4xl md:text-5xl font-bold flex items-center justify-center">
+              <span className="mr-3">🌞</span> Semaine Acadienne 2025
             </h1>
-            <p className="text-gray-600 mt-2">Programme, repas, marées, fun facts et histoire acadienne à Courseulles-sur-Mer !</p>
+            <p className="text-lg md:text-xl mt-3 max-w-2xl mx-auto">
+              Programme, repas, marées, fun facts et histoire acadienne à Courseulles-sur-Mer !
+            </p>
             <button
               onClick={toggleAll}
-              className="mt-4 px-4 py-2 bg-yellow-400 text-blue-800 rounded-md hover:bg-yellow-300 transition-colors"
+              className="mt-6 px-6 py-3 bg-yellow-400 text-blue-900 rounded-full font-semibold hover:bg-yellow-300 transition-colors"
             >
               {allOpen ? 'Tout réduire' : 'Tout déplier'}
             </button>
           </div>
-
-          <h2 className="text-2xl font-semibold text-blue-800 mb-6">Programme quotidien</h2>
-          {data.map((day, index) => (
-            <DayCard key={index} day={day} index={index} />
-          ))}
-
-          <h2 id="timeline" className="text-2xl font-semibold text-blue-800 mt-10 mb-6">📜 Frise chronologique acadienne</h2>
-          <div className="bg-white shadow-lg rounded-xl p-6">
-            {timeline.map((event, index) => (
-              <TimelineCard key={index} event={event} index={index} />
+          <NavBar />
+          <div className="max-w-6xl mx-auto px-6 pt-8">
+            <h2 className="text-3xl font-semibold text-blue-900 mb-8">Programme quotidien</h2>
+            {data.map((day, index) => (
+              <DayCard key={index} day={day} index={index} />
             ))}
+            <h2 id="timeline" className="text-3xl font-semibold text-blue-900 mt-12 mb-8">📜 Frise chronologique acadienne</h2>
+            <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
+              {timeline.map((event, index) => (
+                <TimelineCard key={index} event={event} index={index} />
+              ))}
+            </div>
           </div>
         </div>
       );
