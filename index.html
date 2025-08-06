@@ -8,6 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap');
@@ -218,6 +219,7 @@
   </button>
   <script type="text/babel">
     const { useState, useEffect } = React;
+    const { jsPDF } = window.jspdf;
 
     const data = [
       {
@@ -247,7 +249,7 @@
         challenge: "Chacun partage un souvenir heureux d’un moment passé en famille !"
       },
       {
-        date: "Dimanche 10 août 2025 - Saint Laurent - Bonne fête Le Chou ! ",
+        date: "Dimanche 10 août 2025 - Saint Laurent - Bonne fête Le Chou !",
         weather: {
           morning: "14°C, ciel dégagé ☀️, vent NNO 10-15 km/h, humidité ~85%.",
           afternoon: "21°C, ensoleillé ☀️, vent NO 15-20 km/h.",
@@ -374,7 +376,7 @@
         challenge: "Chacun partage un gadget ou une invention qu’il trouve géniale !"
       },
       {
-        date: "Vendredi 15 août 2025 - Sainte Marie - Bonne fête Bonne Maman et aux nombreuses Marie de la famille ! ",
+        date: "Vendredi 15 août 2025 - Sainte Marie - Bonne fête Bonne Maman et aux nombreuses Marie de la famille !",
         weather: {
           morning: "15°C, nuageux ☁️, vent ONO 15-20 km/h, humidité ~85%.",
           afternoon: "20°C, partiellement nuageux 🌤️, vent NO 15-25 km/h.",
@@ -401,58 +403,78 @@
       }
     ];
 
-    const timeline = [
-      {
-        year: "1604",
-        title: "Fondation de l’Acadie",
-        description: "Pierre du Gua, sieur de Monts, et Samuel de Champlain établissent une colonie à l’Île Sainte-Croix, puis à Port-Royal (1605), marquant le début de l’Acadie. Les colons français, principalement du Poitou et de Normandie, s’allient aux Mi’kmaq, posant les bases d’une culture unique mêlant traditions européennes et autochtones."
-      },
-      {
-        year: "1713",
-        title: "Traité d’Utrecht",
-        description: "La Nouvelle-Écosse continentale passe sous contrôle britannique, tandis que l’Île Royale (Cap-Breton) et l’Île Saint-Jean (Île-du-Prince-Édouard) restent françaises. Les Acadiens deviennent sujets britanniques mais tentent de rester neutres, surnommés les « Français neutres », ce qui crée des tensions avec les autorités coloniales."
-      },
-      {
-        year: "1755-1764",
-        title: "Grand Dérangement",
-        description: "Les Britanniques déportent environ 11 500 Acadiens vers les colonies américaines, la France et l’Angleterre, détruisant leurs terres. Environ un tiers périssent de maladies ou de naufrages. Certains se réfugient au Québec ou avec les Mi’kmaq, tandis que d’autres s’installent en Louisiane, devenant les « Cajuns »."
-      },
-      {
-        year: "1764",
-        title: "Retour progressif des Acadiens",
-        description: "Après le traité de Paris (1763), les Britanniques autorisent les Acadiens à revenir en petits groupes. Privés de leurs terres d’origine, ils s’installent dans des régions côtières comme Chéticamp et Clare, reconstruisant leurs communautés à partir de la pêche et de l’agriculture."
-      },
-      {
-        year: "1847",
-        title: "Publication d’Évangéline",
-        description: "Le poème de Henry Wadsworth Longfellow, inspiré du Grand Dérangement, raconte l’histoire d’une Acadienne séparée de son fiancé. Cette œuvre popularise la tragédie acadienne à l’échelle mondiale, faisant d’Évangéline une héroïne folklorique et un symbole de la résilience acadienne."
-      },
-      {
-        year: "1881",
-        title: "Première Convention nationale acadienne",
-        description: "À Memramcook, Nouveau-Brunswick, plus de 5 000 Acadiens se réunissent pour établir le 15 août comme Fête nationale acadienne, coïncidant avec l’Assomption de Marie, leur sainte patronne. Cet événement marque le début de l’Acadian Renaissance, renforçant leur identité culturelle."
-      },
-      {
-        year: "1884",
-        title: "Adoption des symboles nationaux",
-        description: "Lors de la deuxième Convention nationale à Miscouche, les Acadiens adoptent leur drapeau (tricolore avec l’étoile Stella Maris), leur hymne (*Ave Maris Stella*) et leur devise (« L’Union fait la force »). Ces symboles unifient les communautés acadiennes et affirment leur fierté."
-      },
-      {
-        year: "1955",
-        title: "Bicentenaire du Grand Dérangement",
-        description: "Pour commémorer les 200 ans de la déportation, les Acadiens relancent le Tintamarre, une parade bruyante avec casseroles et klaxons, symbolisant à la fois la douleur de l’exil et la joie de la survivance. Cette tradition devient un pilier de la Fête nationale acadienne."
-      },
-      {
-        year: "1994",
-        title: "Premier Congrès mondial acadien",
-        description: "Organisé au Nouveau-Brunswick, cet événement réunit des Acadiens du monde entier pour célébrer leur culture à travers des festivals, des réunions familiales et des spectacles. Depuis, il a lieu tous les cinq ans, renforçant les liens entre les communautés acadiennes, y compris les Cajuns de Louisiane."
-      },
-      {
-        year: "2003",
-        title: "Proclamation royale",
-        description: "La reine Elizabeth II, par l’entremise du gouverneur général, reconnaît officiellement les torts causés par la déportation des Acadiens. Le 28 juillet est désigné comme Jour de commémoration du Grand Dérangement, honorant la résilience d’un peuple face à l’adversité."
-      }
-    ];
+const timeline = [
+  {
+    year: "1604",
+    title: "Fondation de l’Acadie",
+    description: "Pierre du Gua, sieur de Monts, et Samuel de Champlain établissent une colonie à l’Île Sainte-Croix, puis à Port-Royal (1605), marquant le début de l’Acadie. Les colons français, principalement du Poitou et de Normandie, s’allient aux Mi’kmaq, posant les bases d’une culture unique mêlant traditions européennes et autochtones."
+  },
+  {
+    year: "1713",
+    title: "Traité d’Utrecht",
+    description: "La Nouvelle-Écosse continentale passe sous contrôle britannique, tandis que l’Île Royale (Cap-Breton) et l’Île Saint-Jean (Île-du-Prince-Édouard) restent françaises. Les Acadiens, surnommés les « Français neutres », tentent de rester neutres, créant des tensions avec les autorités coloniales."
+  },
+  {
+    year: "1755-1763",
+    title: "Grand Dérangement",
+    description: "Les Britanniques déportent environ 11 500 Acadiens vers les colonies américaines, la France et l’Angleterre, détruisant leurs terres. Environ un tiers périssent de maladies ou de naufrages. Certains se réfugient au Québec ou avec les Mi’kmaq, d’autres s’installent en Louisiane, devenant les « Cajuns »."
+  },
+  {
+    year: "1764",
+    title: "Retour progressif des Acadiens",
+    description: "Après le traité de Paris (1763), les Britanniques autorisent les Acadiens à revenir en petits groupes. Privés de leurs terres d’origine, ils s’installent dans des régions côtières comme Chéticamp et Clare, reconstruisant leurs communautés à partir de la pêche et de l’agriculture."
+  },
+  {
+    year: "1847",
+    title: "Publication d’Évangéline",
+    description: "Le poème de Henry Wadsworth Longfellow, inspiré du Grand Dérangement, raconte l’histoire d’une Acadienne séparée de son fiancé. Cette œuvre popularise la tragédie acadienne à l’échelle mondiale, faisant d’Évangéline un symbole de la résilience acadienne."
+  },
+  {
+    year: "1881",
+    title: "Première Convention nationale acadienne",
+    description: "À Memramcook, Nouveau-Brunswick, plus de 5 000 Acadiens se réunissent pour établir le 15 août comme Fête nationale acadienne, coïncidant avec l’Assomption de Marie, leur sainte patronne. Cet événement marque le début de la Renaissance acadienne."
+  },
+  {
+    year: "1884",
+    title: "Adoption des symboles acadiens",
+    description: "Lors de la deuxième Convention nationale à Miscouche, les Acadiens adoptent leur drapeau tricolore avec l’étoile Stella Maris, leur hymne (*Ave Maris Stella*) et leur devise (« L’Union fait la force »). Ces symboles unifient les communautés et inspirent les célébrations comme la Semaine Acadienne en Normandie."
+  },
+  {
+    year: "1944",
+    title: "Soldats acadiens au Débarquement",
+    description: "Le 6 juin 1944, des soldats acadiens, portant des noms comme Chiasson, Comeau ou LeBlanc, participent au Débarquement sur Juno Beach en Normandie au sein des forces canadiennes. Leur sacrifice pour libérer la France forge un lien historique entre l’Acadie et la Côte de Nacre, célébré aujourd’hui par la Semaine Acadienne."
+  },
+  {
+    year: "1955",
+    title: "Bicentenaire du Grand Dérangement",
+    description: "Pour commémorer les 200 ans de la déportation, les Acadiens relancent le Tintamarre, une parade bruyante avec casseroles et klaxons, symbolisant la douleur de l’exil et la joie de la survivance. Cette tradition est aujourd’hui un moment fort de la Semaine Acadienne en Normandie."
+  },
+  {
+    year: "1994",
+    title: "Premier Congrès mondial acadien",
+    description: "Organisé au Nouveau-Brunswick, cet événement réunit les Acadiens du monde entier pour célébrer leur culture via festivals et réunions familiales. Il renforce les liens entre les communautés, y compris avec la Normandie, où la Semaine Acadienne promeut cette culture vibrante."
+  },
+  {
+    year: "2003",
+    title: "Proclamation royale",
+    description: "La reine Elizabeth II reconnaît officiellement les torts causés par la déportation des Acadiens. Le 28 juillet est désigné Jour de commémoration du Grand Dérangement, honorant la résilience acadienne, un thème central de la Semaine Acadienne en Normandie."
+  },
+  {
+    year: "2004",
+    title: "Origines de la Semaine Acadienne",
+    description: "À l’occasion du 60e anniversaire du Débarquement, l’idée de la Semaine Acadienne émerge pour honorer les soldats acadiens ayant combattu en Normandie et promouvoir la culture acadienne moderne sur la Côte de Nacre, notamment à Courseulles-sur-Mer."
+  },
+  {
+    year: "2006",
+    title: "Première Semaine Acadienne en Normandie",
+    description: "Arnaud Blin lance la Semaine Acadienne à Courseulles-sur-Mer pour commémorer les soldats acadiens du Débarquement et célébrer la culture acadienne à travers concerts, conférences et le Tintamarre. Le festival devient un rendez-vous annuel sur la Côte de Nacre."
+  },
+  {
+    year: "2025",
+    title: "20e édition de la Semaine Acadienne",
+    description: "La Semaine Acadienne célèbre sa 20e édition, marquant 80 ans depuis la fin de la Seconde Guerre mondiale. Avec plus de 200 000 participants depuis 2006, ce festival, le plus grand du genre en France, unit Acadiens et Normands à travers hommages, musiques et traditions, notamment à Courseulles-sur-Mer."
+  }
+];
 
     function ErrorBoundary({ children }) {
       const [hasError, setHasError] = useState(false);
@@ -469,6 +491,111 @@
         setHasError(true);
         return <div className="text-red-600 p-4">Une erreur est survenue. Veuillez recharger la page.</div>;
       }
+    }
+
+    function generatePDF() {
+      const doc = new jsPDF();
+      let yOffset = 20;
+
+      // Title
+      doc.setFontSize(20);
+      doc.setTextColor(30, 58, 138); // Navy blue (#1e3a8a)
+      doc.text("Semaine Acadienne 2025 - Programme", 20, yOffset);
+      yOffset += 15;
+
+      // Daily Program
+      data.forEach((day, index) => {
+        doc.setFontSize(16);
+        doc.setTextColor(30, 58, 138);
+        doc.text(day.date, 20, yOffset);
+        yOffset += 10;
+
+        doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0);
+
+        // Weather
+        doc.text("Météo", 20, yOffset);
+        yOffset += 7;
+        doc.text(`Matin : ${day.weather.morning}`, 25, yOffset);
+        yOffset += 7;
+        doc.text(`Après-midi : ${day.weather.afternoon}`, 25, yOffset);
+        yOffset += 7;
+        doc.text(`Commentaire : ${day.weather.comment}`, 25, yOffset);
+        yOffset += 7;
+        doc.text(`Conseil : ${day.weather.tip}`, 25, yOffset);
+        yOffset += 10;
+
+        // Tides
+        doc.text("Marées", 20, yOffset);
+        yOffset += 7;
+        doc.text(`Marée haute : ${day.tides.high}`, 25, yOffset);
+        yOffset += 7;
+        doc.text(`Marée basse : ${day.tides.low}`, 25, yOffset);
+        yOffset += 10;
+
+        // Meal Groups
+        doc.text("Groupes de repas", 20, yOffset);
+        yOffset += 7;
+        day.groups.forEach((group, i) => {
+          // Strip HTML tags for PDF
+          const cleanGroup = group.replace(/<[^>]+>/g, '');
+          doc.text(`Groupe ${i + 1} : ${cleanGroup}`, 25, yOffset);
+          yOffset += 7;
+        });
+        yOffset += 10;
+
+        // Program
+        doc.text("Programme", 20, yOffset);
+        yOffset += 7;
+        day.program.forEach((event) => {
+          doc.text(`- ${event}`, 25, yOffset);
+          yOffset += 7;
+        });
+        yOffset += 10;
+
+        // Fun Fact
+        doc.text("Fun fact acadien", 20, yOffset);
+        yOffset += 7;
+        doc.text(day.funFact, 25, yOffset, { maxWidth: 160 });
+        yOffset += doc.getTextDimensions(day.funFact, { maxWidth: 160 }).h + 5;
+
+        // Family Challenge
+        doc.text("Défi familial", 20, yOffset);
+        yOffset += 7;
+        doc.text(day.challenge, 25, yOffset, { maxWidth: 160 });
+        yOffset += doc.getTextDimensions(day.challenge, { maxWidth: 160 }).h + 10;
+
+        // Add page if content exceeds page height
+        if (yOffset > 250 && index < data.length - 1) {
+          doc.addPage();
+          yOffset = 20;
+        }
+      });
+
+      // Timeline
+      doc.addPage();
+      yOffset = 20;
+      doc.setFontSize(16);
+      doc.setTextColor(30, 58, 138);
+      doc.text("Frise chronologique acadienne", 20, yOffset);
+      yOffset += 10;
+
+      doc.setFontSize(12);
+      doc.setTextColor(0, 0, 0);
+      timeline.forEach((event) => {
+        doc.text(`${event.year} : ${event.title}`, 20, yOffset);
+        yOffset += 7;
+        doc.text(event.description, 25, yOffset, { maxWidth: 160 });
+        yOffset += doc.getTextDimensions(event.description, { maxWidth: 160 }).h + 10;
+
+        if (yOffset > 250) {
+          doc.addPage();
+          yOffset = 20;
+        }
+      });
+
+      // Save the PDF
+      doc.save("Semaine_Acadienne_2025_Programme.pdf");
     }
 
     function NavBar() {
@@ -694,9 +821,9 @@
                     {isDarkMode ? 'Mode clair' : 'Mode sombre'}
                   </button>
                   <button
-                    onClick={() => alert('Fonctionnalité de téléchargement PDF à implémenter')}
+                    onClick={generatePDF}
                     className="px-8 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-500 transition-colors duration-300 shadow-md"
-                    aria-label="Télécharger le programme"
+                    aria-label="Télécharger le programme en PDF"
                   >
                     Télécharger le programme
                   </button>
