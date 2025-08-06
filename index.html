@@ -8,8 +8,15 @@
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .fade-in { animation: fadeIn 0.5s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .meal-preparer { font-weight: bold; color: #008080; } /* Teal color for meal preparers */
+  </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gradient-to-b from-blue-100 to-white min-h-screen">
   <div id="root"></div>
   <script type="text/babel">
     const { useState } = React;
@@ -23,9 +30,14 @@
           comment: "Soleil timide, parfait pour un dessert glacé !",
           tip: "Prenez un gilet pour le matin frais, mais sortez les tongs pour l’après-midi ensoleillé !"
         },
+        tides: {
+          high: "06:30 (4.8m), 18:45 (4.9m)",
+          low: "12:15 (1.2m), 00:30 (1.3m)"
+        },
+        mealPreparers: ["Laetitia"],
         groups: [
           "Bonne Maman, Grand Père, Enzo, Chloé, Rody, Za, Marielle, Ethan",
-          "Gaël, Bernard, Julie, Alexandre, Laetitia, Marie, Elinoam, Michou",
+          "Gaël, Bernard, Julie, Alexandre, <span class='meal-preparer'>Laetitia</span>, Marie, Elinoam, Michou",
           "Pablo, Noa, Evangéline, Laurent, Pierre-Emmanuel, Sara, Eric, Samuel"
         ],
         program: [
@@ -44,10 +56,15 @@
           comment: "Grand soleil, on sort les lunettes de star !",
           tip: "Lunettes de soleil et chapeau recommandés pour profiter du grand soleil toute la journée !"
         },
+        tides: {
+          high: "07:15 (4.7m), 19:30 (4.8m)",
+          low: "13:00 (1.3m), 01:15 (1.4m)"
+        },
+        mealPreparers: ["Alexandre", "Eric"],
         groups: [
           "Bonne Maman, Grand Père, Pablo, Julie, Laurent, Sara, Michou, Marie",
-          "Enzo, Bernard, Pierre-Emmanuel, Za, Eric, Evangéline, Noa, Elinoam",
-          "Gaël, Chloé, Ethan, Rody, Alexandre, Laetitia, Marielle, Samuel"
+          "Enzo, Bernard, Pierre-Emmanuel, Za, <span class='meal-preparer'>Eric</span>, Evangéline, Noa, Elinoam",
+          "Gaël, Chloé, Ethan, Rody, <span class='meal-preparer'>Alexandre</span>, Laetitia, Marielle, Samuel"
         ],
         program: [
           "17h30, Salle de l’OMAC : Concert *Complices* (8€) – Harmonies douces, parfait pour un dimanche cozy !",
@@ -65,9 +82,14 @@
           comment: "Ciel clair, on fait chauffer le barbecue !",
           tip: "Veste légère pour le matin frais, mais le soleil de l’après-midi appelle les tongs et le barbecue !"
         },
+        tides: {
+          high: "08:00 (4.9m), 20:15 (5.0m)",
+          low: "13:45 (1.1m), 02:00 (1.2m)"
+        },
+        mealPreparers: ["Rody", "Marielle"],
         groups: [
           "Bonne Maman, Grand Père, Gaël, Elinoam, Alexandre, Laetitia, Julie, Marie",
-          "Pablo, Chloé, Ethan, Pierre-Emmanuel, Rody, Marielle, Samuel, Bernard",
+          "Pablo, Chloé, Ethan, Pierre-Emmanuel, <span class='meal-preparer'>Rody</span>, <span class='meal-preparer'>Marielle</span>, Samuel, Bernard",
           "Enzo, Noa, Evangéline, Laurent, Za, Sara, Eric, Michou"
         ],
         program: [
@@ -85,10 +107,15 @@
           comment: "Nuages taquins, mais la raclette réchauffe !",
           tip: "Parapluie léger recommandé pour le matin, mais l’après-midi sera idéal pour une balade après la raclette !"
         },
+        tides: {
+          high: "08:45 (4.8m), 21:00 (4.9m)",
+          low: "14:30 (1.2m), 02:45 (1.3m)"
+        },
+        mealPreparers: ["Pierre-Emmanuel", "Sara"],
         groups: [
-          "Bonne Maman, Grand Père, Enzo, Noa, Pierre-Emmanuel, Marielle, Laetitia, Samuel",
+          "Bonne Maman, Grand Père, Enzo, Noa, <span class='meal-preparer'>Pierre-Emmanuel</span>, Marielle, Laetitia, Samuel",
           "Gaël, Pablo, Rody, Alexandre, Za, Julie, Eric, Bernard",
-          "Chloé, Elinoam, Ethan, Evangéline, Laurent, Sara, Michou, Marie"
+          "Chloé, Elinoam, Ethan, Evangéline, Laurent, <span class='meal-preparer'>Sara</span>, Michou, Marie"
         ],
         program: [
           "21h00, Salle de l’OMAC : Spectacle *La voix de la mer* (8€) – L’océan chante, et ça donne des frissons !",
@@ -105,16 +132,21 @@
           comment: "Soleil éclatant, qui a caché la crème solaire ?",
           tip: "Crème solaire et casquette indispensables pour profiter du soleil éclatant toute la journée !"
         },
+        tides: {
+          high: "09:30 (4.7m), 21:45 (4.8m)",
+          low: "15:15 (1.3m), 03:30 (1.4m)"
+        },
+        mealPreparers: ["Marie", "Laurent"],
         groups: [
           "Bonne Maman, Grand Père, Bernard, Evangéline, Za, Michou, Julie, Laetitia",
-          "Enzo, Pablo, Elinoam, Laurent, Marielle, Eric, Chloé, Alexandre",
-          "Gaël, Noa, Ethan, Pierre-Emmanuel, Rody, Sara, Samuel, Marie"
+          "Enzo, Pablo, Elinoam, <span class='meal-preparer'>Laurent</span>, Marielle, Eric, Chloé, Alexandre",
+          "Gaël, Noa, Ethan, Pierre-Emmanuel, Rody, Sara, Samuel, <span class='meal-preparer'>Marie</span>"
         ],
         program: [
           "20h30, Salle de l’Edit : Concert Lynda Lemay et Jean-Félix Lalanne (38-45€) – Guitares et émotions, un duo à faire fondre les cœurs !",
           "Journée thématique « La vie au moment du Débarquement » – Plongez dans les années 40, charleston et véhicules vintage au rendez-vous !"
         ],
-        funFact: "Le « Tintamarre », célébré chaque 15 août, est une parade bruyante où les Acadians frappent sur des casseroles et klaxonnent pour proclamer leur identité. Cette tradition, née au Nouveau-Brunswick dans les années 1950, symbolise la vitalité d’un peuple qui a survécu à l’exil du Grand Dérangement. À Courseulles, elle réunit locaux et visiteurs dans une joyeuse cacophonie !",
+        funFact: "Le « Tintamarre », célébré chaque 15 août, est une parade bruyante où les Acadiens frappent sur des casseroles et klaxonnent pour proclamer leur identité. Cette tradition, née au Nouveau-Brunswick dans les années 1950, symbolise la vitalité d’un peuple qui a survécu à l’exil du Grand Dérangement. À Courseulles, elle réunit locaux et visiteurs dans une joyeuse cacophonie !",
         challenge: "Chacun partage une destination de rêve pour un voyage en famille !"
       },
       {
@@ -125,10 +157,15 @@
           comment: "Soleil coquin, sortez les chapeaux de paille !",
           tip: "Chapeau de paille et lunettes de soleil pour la course matinale, et une veste légère pour le vent !"
         },
+        tides: {
+          high: "10:15 (4.9m), 22:30 (5.0m)",
+          low: "16:00 (1.1m), 04:15 (1.2m)"
+        },
+        mealPreparers: ["Pablo", "Noa", "Evangéline", "Enzo", "Chloé", "Julie", "Gaël"],
         groups: [
-          "Bonne Maman, Grand Père, Gaël, Sara, Elinoam, Pierre-Emmanuel, Laetitia, Ethan",
-          "Enzo, Chloé, Laurent, Marielle, Julie, Samuel, Michou, Bernard",
-          "Pablo, Noa, Evangéline, Alexandre, Za, Eric, Rody, Marie"
+          "Bonne Maman, Grand Père, <span class='meal-preparer'>Gaël</span>, Sara, Elinoam, Pierre-Emmanuel, Laetitia, Ethan",
+          "<span class='meal-preparer'>Enzo</span>, <span class='meal-preparer'>Chloé</span>, Laurent, Marielle, <span class='meal-preparer'>Julie</span>, Samuel, Michou, Bernard",
+          "<span class='meal-preparer'>Pablo</span>, <span class='meal-preparer'>Noa</span>, <span class='meal-preparer'>Evangéline</span>, Alexandre, Za, Eric, Rody, Marie"
         ],
         program: [
           "9h30, Digue de Langrune-sur-Mer : Course *La Littorale Juno* (7 km) – Courez ou marchez sur Juno Beach, mémoire et cardio au programme !",
@@ -146,10 +183,15 @@
           comment: "Nuages farceurs, mais la tarte normande sauve tout !",
           tip: "Prenez un imperméable pour le matin nuageux, mais l’après-midi sera parfait pour le Tintamarre !"
         },
+        tides: {
+          high: "11:00 (4.8m), 23:15 (4.9m)",
+          low: "16:45 (1.2m), 05:00 (1.3m)"
+        },
+        mealPreparers: ["Za", "Elinoam", "Ethan", "Samuel"],
         groups: [
           "Bonne Maman, Grand Père, Pablo, Rody, Eric, Marielle, Evangéline, Alexandre",
-          "Enzo, Gaël, Noa, Ethan, Laetitia, Sara, Bernard, Julie",
-          "Chloé, Elinoam, Pierre-Emmanuel, Laurent, Za, Michou, Samuel, Marie"
+          "Enzo, Gaël, Noa, <span class='meal-preparer'>Ethan</span>, Laetitia, Sara, Bernard, Julie",
+          "Chloé, <span class='meal-preparer'>Elinoam</span>, Pierre-Emmanuel, Laurent, <span class='meal-preparer'>Za</span>, Michou, <span class='meal-preparer'>Samuel</span>, Marie"
         ],
         program: [
           "15h00, Digue de Courseulles : Grand Tintamarre – Fête nationale acadienne avec parade et bruit festif, sortez vos casseroles !",
@@ -214,84 +256,156 @@
       }
     ];
 
-    function DayCard({ day }) {
+    function NavBar() {
+      const scrollToSection = (id) => {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+      };
+
+      return (
+        <nav className="fixed top-0 left-0 w-full bg-blue-800 text-white shadow-lg z-10">
+          <div className="max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
+            <div className="flex items-center">
+              <svg className="w-6 h-6 mr-2 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12zm-1-6h2v4H9v-4zm0-2h2v2H9V8z"/>
+              </svg>
+              <span className="text-xl font-bold">Semaine Acadienne 2025</span>
+            </div>
+            <div className="flex flex-wrap gap-2 mt-2 sm:mt-0">
+              {data.map((day, index) => (
+                <button
+                  key={index}
+                  onClick={() => scrollToSection(`day-${index}`)}
+                  className="px-3 py-1 rounded-md bg-blue-600 hover:bg-blue-500 text-sm transition-colors"
+                >
+                  {day.date.split(' ')[0]}
+                </button>
+              ))}
+              <button
+                onClick={() => scrollToSection('timeline')}
+                className="px-3 py-1 rounded-md bg-red-600 hover:bg-red-500 text-sm transition-colors"
+              >
+                Frise
+              </button>
+            </div>
+          </div>
+        </nav>
+      );
+    }
+
+    function DayCard({ day, index }) {
       const [isOpen, setIsOpen] = useState(false);
 
       return (
-        <div className="bg-white shadow-lg rounded-lg mb-4 p-4">
+        <div id={`day-${index}`} className="bg-white shadow-lg rounded-xl mb-6 p-6 fade-in">
           <button
-            className="w-full text-left text-xl font-bold text-blue-800 flex justify-between items-center"
+            className="w-full text-left text-xl font-bold text-blue-800 flex justify-between items-center hover:text-blue-600 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {day.date}
-            <span>{isOpen ? '▲' : '▼'}</span>
+            <span>{day.date}</span>
+            <svg className={`w-6 h-6 transform transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
           </button>
           {isOpen && (
             <div className="mt-4">
-              <h3 className="text-lg font-semibold text-gray-700">🌅 Météo</h3>
-              <p><strong>Matin :</strong> {day.weather.morning}</p>
-              <p><strong>Après-midi :</strong> {day.weather.afternoon}</p>
-              <p><em>{day.weather.comment}</em></p>
-              <p><strong>Conseil météo :</strong> {day.weather.tip}</p>
+              <h3 className="text-lg font-semibold text-gray-800 flex items-center">
+                <span className="mr-2">🌅</span> Météo
+              </h3>
+              <p className="text-gray-600"><strong>Matin :</strong> {day.weather.morning}</p>
+              <p className="text-gray-600"><strong>Après-midi :</strong> {day.weather.afternoon}</p>
+              <p className="text-yellow-600 italic">{day.weather.comment}</p>
+              <p className="text-gray-600"><strong>Conseil :</strong> {day.weather.tip}</p>
 
-              <h3 className="text-lg font-semibold text-gray-700 mt-4">🍽️ Groupes de repas</h3>
-              <ul className="list-disc pl-5">
-                {day.groups.map((group, index) => (
-                  <li key={index}>{group}</li>
+              <h3 className="text-lg font-semibold text-gray-800 mt-4 flex items-center">
+                <span className="mr-2">🌊</span> Marées
+              </h3>
+              <p className="text-gray-600"><strong>Marée haute :</strong> {day.tides.high}</p>
+              <p className="text-gray-600"><strong>Marée basse :</strong> {day.tides.low}</p>
+
+              <h3 className="text-lg font-semibold text-gray-800 mt-4 flex items-center">
+                <span className="mr-2">🍽️</span> Groupes de repas
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {day.groups.map((group, i) => (
+                  <p key={i} className="text-gray-600 bg-gray-100 p-2 rounded-md" dangerouslySetInnerHTML={{ __html: group }}></p>
+                ))}
+              </div>
+
+              <h3 className="text-lg font-semibold text-gray-800 mt-4 flex items-center">
+                <span className="mr-2">🎶</span> Programme
+              </h3>
+              <ul className="list-disc pl-5 text-gray-600">
+                {day.program.map((event, i) => (
+                  <li key={i}>{event}</li>
                 ))}
               </ul>
 
-              <h3 className="text-lg font-semibold text-gray-700 mt-4">🎶 Programme</h3>
-              <ul className="list-disc pl-5">
-                {day.program.map((event, index) => (
-                  <li key={index}>{event}</li>
-                ))}
-              </ul>
+              <h3 className="text-lg font-semibold text-gray-800 mt-4 flex items-center">
+                <span className="mr-2">⭐</span> Fun fact acadien
+              </h3>
+              <p className="text-gray-600">{day.funFact}</p>
 
-              <h3 className="text-lg font-semibold text-gray-700 mt-4">⭐ Fun fact acadien</h3>
-              <p>{day.funFact}</p>
-
-              <h3 className="text-lg font-semibold text-gray-700 mt-4">❓ Défi familial du jour</h3>
-              <p>{day.challenge}</p>
+              <h3 className="text-lg font-semibold text-gray-800 mt-4 flex items-center">
+                <span className="mr-2">❓</span> Défi familial
+              </h3>
+              <p className="text-gray-600">{day.challenge}</p>
             </div>
           )}
         </div>
       );
     }
 
-    function TimelineCard({ event }) {
+    function TimelineCard({ event, index }) {
       return (
-        <div className="flex mb-8">
+        <div className="flex mb-8 relative">
           <div className="w-1/4 text-right pr-4">
-            <h3 className="text-lg font-bold text-blue-800">{event.year}</h3>
+            <h3 className="text-lg font-bold text-red-600">{event.year}</h3>
           </div>
-          <div className="w-3/4 pl-4 border-l-4 border-blue-500">
-            <h4 className="text-md font-semibold">{event.title}</h4>
-            <p className="text-sm">{event.description}</p>
+          <div className="w-3/4 pl-6 relative">
+            <div className="absolute left-0 top-0 w-4 h-4 bg-yellow-400 rounded-full -ml-2 mt-1"></div>
+            <div className="absolute left-0 top-4 bottom-0 w-1 bg-blue-500 -ml-1"></div>
+            <h4 className="text-md font-semibold text-blue-800">{event.title}</h4>
+            <p className="text-sm text-gray-600">{event.description}</p>
           </div>
         </div>
       );
     }
 
     function App() {
-      return (
-        <div className="max-w-4xl mx-auto p-6">
-          <h1 className="text-3xl font-bold text-center text-blue-800 mb-6">
-            Semaine Acadienne 2025 - Courseulles-sur-Mer
-          </h1>
-          <p className="text-center text-gray-600 mb-8">
-            Découvrez le programme, les groupes de repas, les fun facts acadiens et les défis familiaux pour une semaine mémorable !
-          </p>
+      const [allOpen, setAllOpen] = useState(false);
 
-          <h2 className="text-2xl font-semibold text-blue-800 mb-4">Programme quotidien</h2>
+      const toggleAll = () => {
+        setAllOpen(!allOpen);
+        document.querySelectorAll('.day-card button').forEach(button => {
+          button.click();
+        });
+      };
+
+      return (
+        <div className="max-w-4xl mx-auto pt-20 pb-10 px-4">
+          <NavBar />
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-blue-800 flex items-center justify-center">
+              <span className="mr-2">🌞</span> Semaine Acadienne 2025
+            </h1>
+            <p className="text-gray-600 mt-2">Programme, repas, marées, fun facts et histoire acadienne à Courseulles-sur-Mer !</p>
+            <button
+              onClick={toggleAll}
+              className="mt-4 px-4 py-2 bg-yellow-400 text-blue-800 rounded-md hover:bg-yellow-300 transition-colors"
+            >
+              {allOpen ? 'Tout réduire' : 'Tout déplier'}
+            </button>
+          </div>
+
+          <h2 className="text-2xl font-semibold text-blue-800 mb-6">Programme quotidien</h2>
           {data.map((day, index) => (
-            <DayCard key={index} day={day} />
+            <DayCard key={index} day={day} index={index} />
           ))}
 
-          <h2 className="text-2xl font-semibold text-blue-800 mt-8 mb-4">📜 Frise chronologique de l’histoire acadienne</h2>
-          <div className="bg-white shadow-lg rounded-lg p-6">
+          <h2 id="timeline" className="text-2xl font-semibold text-blue-800 mt-10 mb-6">📜 Frise chronologique acadienne</h2>
+          <div className="bg-white shadow-lg rounded-xl p-6">
             {timeline.map((event, index) => (
-              <TimelineCard key={index} event={event} />
+              <TimelineCard key={index} event={event} index={index} />
             ))}
           </div>
         </div>
